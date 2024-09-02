@@ -1,0 +1,21 @@
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# MacOS
+.DS_Store
+
+# Terraform directories
+.terraform/
+.terraformer/
+.tfplan
+.tfdestroy
+.terraform.lock.hcl
+terraform_backend.tf
+
+# Maven
+target/
+function.zip
+pom.xml.versionsBackup
