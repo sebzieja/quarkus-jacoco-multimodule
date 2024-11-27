@@ -9,15 +9,20 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>child1</artifactId>
-
-  <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <artifactId>jacoco-aggregator</artifactId>
 
   <dependencies>
+    <dependency>
+      <groupId>org.acme</groupId>
+      <artifactId>child1</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.acme</groupId>
+      <artifactId>child2</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jacoco</artifactId>

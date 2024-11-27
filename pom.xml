@@ -11,6 +11,7 @@
   <modules>
     <module>child1</module>
     <module>child2</module>
+    <module>jacoco-aggregator</module> <!-- Last module to group the report -->
   </modules>
 
   <properties>
@@ -20,7 +21,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.13.3</quarkus.platform.version>
+    <quarkus.platform.version>3.16.4</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0</surefire-plugin.version>
   </properties>
@@ -48,6 +49,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.36</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
@@ -60,11 +68,6 @@
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jacoco</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -102,9 +105,7 @@
             <maven.home>${maven.home}</maven.home>
             <quarkus.jacoco.data-file>${maven.multiModuleProjectDirectory}/target/jacoco.exec</quarkus.jacoco.data-file>
             <quarkus.jacoco.reuse-data-file>true</quarkus.jacoco.reuse-data-file>
-            <quarkus.jacoco.report-location>
-              ${maven.multiModuleProjectDirectory}/target/coverage
-            </quarkus.jacoco.report-location>
+            <quarkus.jacoco.report-location>${maven.multiModuleProjectDirectory}/target/coverage</quarkus.jacoco.report-location>
           </systemPropertyVariables>
         </configuration>
       </plugin>
@@ -127,25 +128,29 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.12</version>
-        <executions>
-          <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-            <configuration>
-              <exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
-              <destFile>${maven.multiModuleProjectDirectory}/target/jacoco.exec</destFile>
-              <append>true</append>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.12</version>
+          <executions>
+            <execution>
+              <id>default-prepare-agent</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+              <configuration>
+                <exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
+                <destFile>${maven.multiModuleProjectDirectory}/target/jacoco.exec</destFile>
+                <append>true</append>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <profiles>
